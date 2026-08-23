@@ -2,93 +2,93 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora Menstrual</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Mi Calendario Menstrual</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .calendar-container {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(255, 182, 193, 0.4);
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+    h2 { color: #ff6b8b; margin-bottom: 5px; }
+    p { color: #777; font-size: 14px; margin-bottom: 25px; }
+    .form-group { text-align: left; margin-bottom: 20px; }
+    label { display: block; color: #555; font-size: 14px; margin-bottom: 8px; font-weight: 600; }
+    input { width: 100%; padding: 12px; border: 2px solid #ffe3e8; border-radius: 10px; box-sizing: border-box; font-size: 16px; color: #333; outline: none; }
+    input:focus { border-color: #ff6b8b; }
+    button { width: 100%; background-color: #ff6b8b; color: white; border: none; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 10px; cursor: pointer; transition: background 0.3s; }
+    button:hover { background-color: #ff4770; }
+    .results-box { margin-top: 25px; padding: 15px; background-color: #fff0f3; border-radius: 12px; text-align: left; }
+    .results-box h3 { color: #ff4770; font-size: 16px; margin-top: 0; }
+    ul { list-style: none; padding: 0; margin: 0; }
+    li { padding: 10px 0; border-bottom: 1px solid #ffe3e8; color: #444; font-size: 15px; }
+    li:last-child { border-bottom: none; }
+  </style>
 </head>
-
 <body>
 
-  <main class="container">
+<div class="calendar-container">
+  <h2>Mi Calendario Menstrual</h2>
+  <p>Ingresa tus datos para predecir tus próximos ciclos.</p>
+  
+  <div class="form-group">
+    <label for="lastPeriod">¿Qué día comenzó tu última regla?</label>
+    <input type="date" id="lastPeriod">
+  </div>
+  
+  <div class="form-group">
+    <label for="cycleLength">¿Cuánto dura tu ciclo? (Promedio: 28 días)</label>
+    <input type="number" id="cycleLength" value="28" min="20" max="45">
+  </div>
+  
+  <button onclick="calcularCiclos()">Predecir próximos ciclos</button>
+  
+  <div id="results" class="results-box" style="display: none;">
+    <h3>Tus próximas fechas estimadas:</h3>
+    <ul id="predictionList"></ul>
+  </div>
+</div>
 
-    <section class="calculator-card">
-
-      <div class="header">
-        <div class="icon">🌸</div>
-        <h1>Mi calendario menstrual</h1>
-        <p>
-          Conoce una estimación de las fechas de tus próximos periodos.
-        </p>
-      </div>
-
-      <form id="periodForm">
-
-        <div class="input-group">
-          <label for="lastPeriod">
-            📅 Fecha de tu última menstruación
-          </label>
-
-          <input
-            type="date"
-            id="lastPeriod"
-            required
-          >
-        </div>
-
-        <div class="input-group">
-          <label for="cycleLength">
-            🔄 Duración habitual de tu ciclo
-          </label>
-
-          <select id="cycleLength" required>
-            <option value="">Selecciona una duración</option>
-            <option value="21">21 días</option>
-            <option value="22">22 días</option>
-            <option value="23">23 días</option>
-            <option value="24">24 días</option>
-            <option value="25">25 días</option>
-            <option value="26">26 días</option>
-            <option value="27">27 días</option>
-            <option value="28">28 días</option>
-            <option value="29">29 días</option>
-            <option value="30">30 días</option>
-            <option value="31">31 días</option>
-            <option value="32">32 días</option>
-            <option value="33">33 días</option>
-            <option value="34">34 días</option>
-            <option value="35">35 días</option>
-          </select>
-        </div>
-
-        <button type="submit">
-          Calcular mis próximas fechas ✨
-        </button>
-
-      </form>
-
-      <div id="results" class="results hidden">
-
-        <h2>🌷 Tus próximas menstruaciones</h2>
-
-        <p class="result-description">
-          Estas fechas son una estimación basada en la duración de tu ciclo.
-        </p>
-
-        <div id="predictionList"></div>
-
-        <div class="notice">
-          💗 <strong>Recuerda:</strong> los ciclos menstruales pueden variar
-          de un mes a otro. Esta herramienta sirve únicamente como orientación
-          y no debe utilizarse como método anticonceptivo.
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-  <script src="script.js"></script>
+<script>
+function calcularCiclos() {
+  const lastPeriodInput = document.getElementById('lastPeriod').value;
+  const cycleLength = parseInt(document.getElementById('cycleLength').value);
+  const list = document.getElementById('predictionList');
+  const resultsBox = document.getElementById('results');
+  
+  if (!lastPeriodInput) {
+    alert("Por favor, selecciona la fecha de tu última regla.");
+    return;
+  }
+  
+  list.innerHTML = "";
+  let baseDate = new Date(lastPeriodInput + "T00:00:00");
+  
+  for (let i = 1; i <= 3; i++) {
+    baseDate.setDate(baseDate.getDate() + cycleLength);
+    const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const fechaFormateada = baseDate.toLocaleDateString('es-ES', opciones);
+    
+    const li = document.createElement('li');
+    li.innerHTML = `🌸 <strong>Ciclo ${i}:</strong> ${fechaFormateada}`;
+    list.appendChild(li);
+  }
+  
+  resultsBox.style.display = "block";
+}
+</script>
 
 </body>
 </html>
