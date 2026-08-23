@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora Menstrual</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <main class="container">
+
+    <section class="calculator-card">
+
+      <div class="header">
+        <div class="icon">🌸</div>
+        <h1>Mi calendario menstrual</h1>
+        <p>
+          Conoce una estimación de las fechas de tus próximos periodos.
+        </p>
+      </div>
+
+      <form id="periodForm">
+
+        <div class="input-group">
+          <label for="lastPeriod">
+            📅 Fecha de tu última menstruación
+          </label>
+
+          <input
+            type="date"
+            id="lastPeriod"
+            required
+          >
+        </div>
+
+        <div class="input-group">
+          <label for="cycleLength">
+            🔄 Duración habitual de tu ciclo
+          </label>
+
+          <select id="cycleLength" required>
+            <option value="">Selecciona una duración</option>
+            <option value="21">21 días</option>
+            <option value="22">22 días</option>
+            <option value="23">23 días</option>
+            <option value="24">24 días</option>
+            <option value="25">25 días</option>
+            <option value="26">26 días</option>
+            <option value="27">27 días</option>
+            <option value="28">28 días</option>
+            <option value="29">29 días</option>
+            <option value="30">30 días</option>
+            <option value="31">31 días</option>
+            <option value="32">32 días</option>
+            <option value="33">33 días</option>
+            <option value="34">34 días</option>
+            <option value="35">35 días</option>
+          </select>
+        </div>
+
+        <button type="submit">
+          Calcular mis próximas fechas ✨
+        </button>
+
+      </form>
+
+      <div id="results" class="results hidden">
+
+        <h2>🌷 Tus próximas menstruaciones</h2>
+
+        <p class="result-description">
+          Estas fechas son una estimación basada en la duración de tu ciclo.
+        </p>
+
+        <div id="predictionList"></div>
+
+        <div class="notice">
+          💗 <strong>Recuerda:</strong> los ciclos menstruales pueden variar
+          de un mes a otro. Esta herramienta sirve únicamente como orientación
+          y no debe utilizarse como método anticonceptivo.
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
